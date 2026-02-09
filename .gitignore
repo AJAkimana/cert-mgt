@@ -1,0 +1,33 @@
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Node/Angular (client)
+client/node_modules/
+client/dist/
+client/.angular/
+client/coverage/
+client/.cache/
+client/tmp/
+client/.env
+client/.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Java/Spring Boot (server)
+server/target/
+server/.classpath
+server/.project
+server/.settings/
+server/.idea/
+server/*.iml
+
+# General archives
+*.zip
+*.tar
+*.tgz
+*.gz
