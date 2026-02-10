@@ -1,4 +1,4 @@
-package com.seccert.server.controllers;
+package com.seccert.server.controller;
 
 import com.seccert.server.entity.User;
 import com.seccert.server.repository.UserRepository;

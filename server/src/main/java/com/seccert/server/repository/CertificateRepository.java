@@ -1,8 +1,10 @@
 package com.seccert.server.repository;
 
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.seccert.server.entity.Certificate;
 
-public interface CertificateRepository extends JpaRepository<Certificate, Long> {
+public interface CertificateRepository extends JpaRepository<Certificate, UUID> {
 }
