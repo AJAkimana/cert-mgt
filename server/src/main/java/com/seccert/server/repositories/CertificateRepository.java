@@ -1,7 +1,8 @@
-package com.seccert.server.repository;
+package com.seccert.server.repositories;
 
-import com.seccert.server.model.Certificate;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.seccert.server.models.Certificate;
 
 public interface CertificateRepository extends JpaRepository<Certificate, Long> {
 }

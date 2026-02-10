@@ -1,7 +1,8 @@
-package com.seccert.server.controller;
+package com.seccert.server.controllers;
 
-import com.seccert.server.model.User;
-import com.seccert.server.repository.UserRepository;
+import com.seccert.server.models.User;
+import com.seccert.server.repositories.UserRepository;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

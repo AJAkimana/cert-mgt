@@ -1,7 +1,8 @@
-package com.seccert.server.repository;
+package com.seccert.server.repositories;
 
-import com.seccert.server.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.seccert.server.models.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 }

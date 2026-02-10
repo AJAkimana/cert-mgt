@@ -1,4 +1,4 @@
-package com.seccert.server.model;
+package com.seccert.server.models;
 
 import jakarta.persistence.*;
 import java.time.Instant;

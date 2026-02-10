@@ -1,7 +1,8 @@
-package com.seccert.server.controller;
+package com.seccert.server.controllers;
 
-import com.seccert.server.model.Customer;
-import com.seccert.server.repository.CustomerRepository;
+import com.seccert.server.models.Customer;
+import com.seccert.server.repositories.CustomerRepository;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
