@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "companies")
-public class Company {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +22,14 @@ public class Company {
 
     private Instant createdAt = Instant.now();
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Certificate> certificates = new ArrayList<>();
 
-    public Company() {}
+    public Customer() {
+    }
 
     // getters and setters
 }

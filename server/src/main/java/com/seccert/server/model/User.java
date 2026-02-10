@@ -23,13 +23,14 @@ public class User {
     private boolean active = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
-    private Company company;
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     private Instant createdAt = Instant.now();
 
-    public User() {}
+    public User() {
+    }
 
     // getters and setters
-    
+
 }

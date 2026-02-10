@@ -22,10 +22,11 @@ public class Certificate {
     private Instant expiresAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
-    private Company company;
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
-    public Certificate() {}
+    public Certificate() {
+    }
 
     // getters and setters
 }
