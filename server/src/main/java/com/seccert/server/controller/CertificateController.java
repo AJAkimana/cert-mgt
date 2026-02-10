@@ -1,7 +1,7 @@
 package com.seccert.server.controller;
 
-import com.seccert.model.server.Certificate;
-import com.seccert.repository.server.CertificateRepository;
+import com.seccert.server.model.Certificate;
+import com.seccert.server.repository.CertificateRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
