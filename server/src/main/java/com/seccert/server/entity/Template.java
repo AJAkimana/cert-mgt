@@ -5,8 +5,8 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "certificates")
-public class Certificate {
+@Table(name = "templates")
+public class Template {
 
     @Id
     @GeneratedValue
@@ -16,23 +16,17 @@ public class Certificate {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "template_id")
-    private Template template;
-
     @Column(nullable = false, length = 150)
-    private String recipientName;
+    private String name;
 
-    @Column(length = 150)
-    private String recipientEmail;
+    @Column(columnDefinition = "TEXT")
+    private String description;
 
     @Column(nullable = false, columnDefinition = "jsonb")
-    private String dataPayload;
+    private String content;
 
-    @Column(nullable = false, length = 20)
-    private String status = "PENDING";
-
-    private Instant issuedAt;
+    @Column(nullable = false)
+    private boolean isActive = true;
 
     @Column(nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
