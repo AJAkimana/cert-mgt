@@ -1,7 +1,7 @@
 package com.seccert.server.controllers;
 
 import com.seccert.server.entity.Customer;
-import com.seccert.server.repositories.CustomerRepository;
+import com.seccert.server.repository.CustomerRepository;
 
 import org.springframework.web.bind.annotation.*;
 

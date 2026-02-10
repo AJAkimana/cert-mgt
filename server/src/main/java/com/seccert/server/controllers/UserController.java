@@ -1,7 +1,7 @@
 package com.seccert.server.controllers;
 
 import com.seccert.server.entity.User;
-import com.seccert.server.repositories.UserRepository;
+import com.seccert.server.repository.UserRepository;
 
 import org.springframework.web.bind.annotation.*;
 

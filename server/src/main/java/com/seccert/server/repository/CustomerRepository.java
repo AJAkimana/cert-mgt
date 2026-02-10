@@ -1,4 +1,4 @@
-package com.seccert.server.repositories;
+package com.seccert.server.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
