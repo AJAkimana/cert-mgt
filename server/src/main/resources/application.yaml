@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/your_db_name
-    username: your_db_user
-    password: your_db_password
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
 
   jpa:
     hibernate:
@@ -14,10 +14,13 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
-
-  jwt:
-    secret: CHANGE_ME_SUPER_SECRET_KEY_256_BITS_MINIMUM
-    expiration: 3600000
+logging:
+  level:
+    org.flywaydb: DEBUG
+    org.springframework.jdbc.datasource: DEBUG
+jwt:
+  secret: CHANGE_ME_SUPER_SECRET_KEY_256_BITS_MINIMUM
+  expiration-ms: 3600000
 
 server:
   port: 8080
