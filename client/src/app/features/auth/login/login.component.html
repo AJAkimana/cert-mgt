@@ -1,17 +1,50 @@
-<mat-card>
-  <h2>Login</h2>
+<div class="login-shell">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Sign in</mat-card-title>
+      <mat-card-subtitle>Use your account credentials</mat-card-subtitle>
+    </mat-card-header>
 
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <mat-form-field appearance="outline" class="full">
-      <mat-label>Email or Username</mat-label>
-      <input matInput formControlName="identifier" />
-    </mat-form-field>
+    <mat-card-content>
+      <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Email or Username</mat-label>
+          <mat-icon matPrefix aria-hidden="true">person</mat-icon>
+          <input matInput formControlName="identifier" autocomplete="username" />
+        </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full">
-      <mat-label>Password</mat-label>
-      <input matInput type="password" formControlName="password" />
-    </mat-form-field>
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Password</mat-label>
+          <mat-icon matPrefix aria-hidden="true">lock</mat-icon>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            autocomplete="current-password"
+          />
+        </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit">Login</button>
-  </form>
-</mat-card>
+        <div class="form-row">
+          <mat-checkbox color="primary" formControlName="remember"> Remember me </mat-checkbox>
+          <a class="link" routerLink="/auth/register">Create account</a>
+        </div>
+
+        <button
+          class="submit"
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          Sign in
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-actions align="end">
+      <span class="support">Need help? Contact support.</span>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,21 +1,23 @@
+@use "@angular/material" as mat;
 
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
-@use '@angular/material' as mat;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 html {
   height: 100%;
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        secondary: mat.$blue-palette,
+        tertiary: mat.$blue-palette,
+        error: mat.$red-palette
+      ),
+      typography: Roboto,
+      density: 0
+    )
+  );
 }
 
 body {
@@ -35,4 +37,34 @@ body {
   margin: 0;
   height: 100%;
 }
-/* You can add global styles to this file, and also import other style files */
+
+.full {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+mat-card {
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 24px;
+}
+
+.app-snackbar {
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.app-snackbar-success {
+  --mdc-snackbar-container-color: #0f766e;
+  --mdc-snackbar-supporting-text-color: #f0fdfa;
+}
+
+.app-snackbar-error {
+  --mdc-snackbar-container-color: #b91c1c;
+  --mdc-snackbar-supporting-text-color: #fef2f2;
+}
+
+.app-snackbar-info {
+  --mdc-snackbar-container-color: #1d4ed8;
+  --mdc-snackbar-supporting-text-color: #eff6ff;
+}

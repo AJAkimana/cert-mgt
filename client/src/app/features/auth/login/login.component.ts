@@ -5,11 +5,22 @@ import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, MatCardModule, MatInputModule, MatButtonModule],
+  imports: [
+    ReactiveFormsModule,
+    MatCardModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatDividerModule,
+  ],
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
@@ -23,6 +34,7 @@ export class LoginComponent {
     this.form = this.fb.group({
       identifier: ['', Validators.required],
       password: ['', Validators.required],
+      remember: [false],
     });
   }
 

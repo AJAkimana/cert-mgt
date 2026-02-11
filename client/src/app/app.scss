@@ -1,17 +1,31 @@
-@import "@angular/material/prebuilt-themes/indigo-pink.css";
-
-html,
-body {
+:host {
+  --app-topbar-height: 64px;
+  display: block;
   height: 100%;
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-.full {
-  width: 100%;
-  margin-bottom: 16px;
+
+@media (max-width: 599px) {
+  :host {
+    --app-topbar-height: 56px;
+  }
 }
-mat-card {
-  max-width: 420px;
-  margin: 40px auto;
+
+.app-shell {
+  height: calc(100vh - var(--app-topbar-height));
+  background: var(--mat-sys-surface-container);
+}
+
+.app-sidenav {
+  width: 240px;
+  border-right: 1px solid var(--mat-sys-outline-variant);
+}
+
+.app-content {
+  min-height: 100%;
   padding: 24px;
+  background: var(--mat-sys-surface);
+}
+
+.active-link {
+  font-weight: 600;
 }
