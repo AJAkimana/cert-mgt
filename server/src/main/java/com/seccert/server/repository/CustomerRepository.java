@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.seccert.server.entity.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, UUID> {
+    boolean existsByName(String name);
 }
