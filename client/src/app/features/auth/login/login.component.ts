@@ -32,8 +32,8 @@ export class LoginComponent {
     private readonly router: Router,
   ) {
     this.form = this.fb.group({
-      identifier: ['', Validators.required],
-      password: ['', Validators.required],
+      identifier: ['test', Validators.required],
+      password: ['Test@123', Validators.required],
       remember: [false],
     });
   }
