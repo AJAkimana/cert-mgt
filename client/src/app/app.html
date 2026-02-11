@@ -4,7 +4,8 @@
   <mat-sidenav class="app-sidenav" mode="side" opened>
     <mat-nav-list>
       <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a>
-      <ng-container *ngIf="isLoggedIn(); else guestLinks">
+      <ng-container if="isLoggedIn(); else guestLinks">
+        <a mat-list-item routerLink="/customers" routerLinkActive="active-link">Customers</a>
         <a mat-list-item routerLink="/profile" routerLinkActive="active-link">Profile</a>
         <button mat-list-item type="button" (click)="logout()">Logout</button>
       </ng-container>

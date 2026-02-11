@@ -1,0 +1,50 @@
+.customers-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.customers-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.customers-header h2 {
+  margin: 0 0 4px;
+}
+
+.customers-header p {
+  margin: 0;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.customers-card {
+  padding: 8px 0;
+}
+
+.customers-table {
+  width: 100%;
+}
+
+.loading {
+  padding: 16px 24px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.empty {
+  padding: 16px 24px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+@media (max-width: 720px) {
+  .customers-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .customers-header button {
+    width: 100%;
+  }
+}

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AuthResponse, LoginRequest, RegisterRequest } from '../models/auth.models';
+import { Auth, LoginRequest, RegisterRequest } from '../models/auth.models';
 import { Observable, tap } from 'rxjs';
 import { TokenService } from './token.service';
 import { environment } from '../../../environments/environment';
+import { ApiResponse } from '../models/api-response.models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -14,10 +15,14 @@ export class AuthService {
     private readonly tokenService: TokenService,
   ) {}
 
-  login(payload: LoginRequest): Observable<AuthResponse> {
-    return this.http
-      .post<AuthResponse>(`${this.baseUrl}/login`, payload)
-      .pipe(tap((res) => this.tokenService.setToken(res.token)));
+  login(payload: LoginRequest): Observable<ApiResponse<Auth>> {
+    return this.http.post<ApiResponse<Auth>>(`${this.baseUrl}/login`, payload).pipe(
+      tap((res) => {
+        console.log(res);
+
+        return this.tokenService.setToken(res.data.token);
+      }),
+    );
   }
 
   register(payload: RegisterRequest): Observable<void> {
