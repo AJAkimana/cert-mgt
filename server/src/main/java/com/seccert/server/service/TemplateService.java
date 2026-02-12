@@ -1,5 +1,7 @@
 package com.seccert.server.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seccert.server.dto.template.CreateTemplateRequest;
 import com.seccert.server.entity.Template;
 import com.seccert.server.entity.User;
@@ -10,29 +12,32 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class TemplateService {
 
     private final TemplateRepository templateRepository;
     private final UserRepository userRepository;
+    private final ObjectMapper objectMapper;
 
-    public TemplateService(TemplateRepository templateRepository, UserRepository userRepository) {
+    public TemplateService(TemplateRepository templateRepository, UserRepository userRepository,
+            ObjectMapper objectMapper) {
         this.templateRepository = templateRepository;
         this.userRepository = userRepository;
+        this.objectMapper = objectMapper;
     }
 
     @Transactional
-    public Template createTemplate(UUID customerId, CreateTemplateRequest request, String identifier) {
+    public Template createTemplate(CreateTemplateRequest request, String identifier) {
+        System.out.println("Creating template with name: " + request.getName() + " for identifier: " + identifier);
         if (identifier == null || identifier.isBlank()) {
             throw new AccessDeniedException("Unauthenticated request");
         }
         User user = userRepository.findByEmailOrUsername(identifier, identifier)
                 .orElseThrow(() -> new AccessDeniedException("User not found"));
 
-        if (user.getCustomer() == null || !customerId.equals(user.getCustomer().getId())) {
-            throw new AccessDeniedException("Not allowed to create templates for this customer");
+        if (user.getCustomer() == null) {
+            throw new AccessDeniedException("User has no customer");
         }
 
         Template template = new Template();
@@ -40,9 +45,12 @@ public class TemplateService {
         template.setName(request.getName());
         template.setDescription(request.getDescription());
         template.setRawTemplate(request.getRawTemplate());
-        template.setPlaceholders(request.getPlaceholders());
+        JsonNode placeholders = request.getPlaceholders() == null
+                ? null
+                : objectMapper.valueToTree(request.getPlaceholders());
+        template.setPlaceholders(placeholders);
         template.setActive(request.getIsActive() == null || request.getIsActive());
-
+        System.out.println("Saving template: " + template.getName() + " for customer: " + user.getCustomer().getName());
         return templateRepository.save(template);
     }
 

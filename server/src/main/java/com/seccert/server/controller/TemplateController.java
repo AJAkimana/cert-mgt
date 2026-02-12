@@ -11,10 +11,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/customers/{customerId}/templates")
+@RequestMapping("/api/templates")
 public class TemplateController {
 
     private final TemplateService templateService;
@@ -27,16 +26,17 @@ public class TemplateController {
 
     @PostMapping
     public ResponseEntity<ApiResponse<Template>> create(
-            @PathVariable UUID customerId,
             @Valid @RequestBody CreateTemplateRequest request,
             Authentication authentication) {
+        System.out.println("======>Received request to create template: " + request.getName());
         String identifier = authentication != null ? authentication.getName() : null;
-        Template template = templateService.createTemplate(customerId, request, identifier);
+        Template template = templateService.createTemplate(request, identifier);
         return ResponseEntity.ok(responseService.success("Template created", template));
     }
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<Template>>> list(Authentication authentication) {
+        System.out.println("Received request to list templates");
         String identifier = authentication != null ? authentication.getName() : null;
         List<Template> templates = templateService.getTemplatesForUser(identifier);
         return ResponseEntity.ok(responseService.success("Templates loaded", templates));

@@ -1,8 +1,9 @@
 package com.seccert.server.dto.template;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.util.Map;
 
 public class CreateTemplateRequest {
 
@@ -16,7 +17,7 @@ public class CreateTemplateRequest {
     @NotBlank
     private String rawTemplate;
 
-    private JsonNode placeholders;
+    private Map<String, Object> placeholders;
 
     private Boolean isActive;
 
@@ -44,11 +45,11 @@ public class CreateTemplateRequest {
         this.rawTemplate = rawTemplate;
     }
 
-    public JsonNode getPlaceholders() {
+    public Map<String, Object> getPlaceholders() {
         return placeholders;
     }
 
-    public void setPlaceholders(JsonNode placeholders) {
+    public void setPlaceholders(Map<String, Object> placeholders) {
         this.placeholders = placeholders;
     }
 

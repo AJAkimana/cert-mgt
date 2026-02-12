@@ -6,6 +6,7 @@ import { authGuard } from './core/guards/auth.guard';
 import { guestGuard } from './core/guards/guest.guard';
 import { ProfileComponent } from './features/profile/profile.component';
 import { CustomersComponent } from './features/customers/customers.component';
+import { TemplateCreateComponent } from './features/templates/template-create.component';
 
 export const routes: Routes = [
   { path: 'auth/login', component: LoginComponent, canActivate: [guestGuard] },
@@ -13,6 +14,7 @@ export const routes: Routes = [
 
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'customers', component: CustomersComponent, canActivate: [authGuard] },
+  { path: 'templates/new', component: TemplateCreateComponent, canActivate: [authGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
 
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
