@@ -1,7 +1,5 @@
 package com.seccert.server.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seccert.server.dto.template.CreateTemplateRequest;
 import com.seccert.server.entity.Template;
 import com.seccert.server.entity.User;
@@ -18,13 +16,10 @@ public class TemplateService {
 
     private final TemplateRepository templateRepository;
     private final UserRepository userRepository;
-    private final ObjectMapper objectMapper;
 
-    public TemplateService(TemplateRepository templateRepository, UserRepository userRepository,
-            ObjectMapper objectMapper) {
+    public TemplateService(TemplateRepository templateRepository, UserRepository userRepository) {
         this.templateRepository = templateRepository;
         this.userRepository = userRepository;
-        this.objectMapper = objectMapper;
     }
 
     @Transactional
@@ -45,10 +40,7 @@ public class TemplateService {
         template.setName(request.getName());
         template.setDescription(request.getDescription());
         template.setRawTemplate(request.getRawTemplate());
-        JsonNode placeholders = request.getPlaceholders() == null
-                ? null
-                : objectMapper.valueToTree(request.getPlaceholders());
-        template.setPlaceholders(placeholders);
+        template.setPlaceholders(request.getPlaceholders());
         template.setActive(request.getIsActive() == null || request.getIsActive());
         System.out.println("Saving template: " + template.getName() + " for customer: " + user.getCustomer().getName());
         return templateRepository.save(template);

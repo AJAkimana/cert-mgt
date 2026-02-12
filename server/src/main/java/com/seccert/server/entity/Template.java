@@ -1,10 +1,10 @@
 package com.seccert.server.entity;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.time.Instant;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -30,7 +30,7 @@ public class Template {
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private JsonNode placeholders;
+    private Map<String, Object> placeholders;
 
     @Column(nullable = false)
     private boolean isActive = true;
@@ -83,11 +83,11 @@ public class Template {
         this.rawTemplate = rawTemplate;
     }
 
-    public JsonNode getPlaceholders() {
+    public Map<String, Object> getPlaceholders() {
         return placeholders;
     }
 
-    public void setPlaceholders(JsonNode placeholders) {
+    public void setPlaceholders(Map<String, Object> placeholders) {
         this.placeholders = placeholders;
     }
 
