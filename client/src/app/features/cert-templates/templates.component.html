@@ -46,7 +46,7 @@
                 <span
                   class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-semibold uppercase text-slate-600"
                 >
-                  {{ template.isActive ? 'Active' : 'Inactive' }}
+                  {{ template.active ? 'Active' : 'Inactive' }}
                 </span>
               </div>
               <div class="mt-4 flex items-center justify-between text-xs text-slate-500">
@@ -108,9 +108,9 @@
                 <tr class="border-b border-slate-100 last:border-0">
                   <td class="py-3 pr-4">
                     <div class="text-sm font-semibold text-slate-800">
-                      {{ cert.template?.name }}
+                      {{ cert.templateName }}
                     </div>
-                    <div class="text-[11px] text-slate-500">{{ cert.template?.description }}</div>
+                    <div class="text-[11px] text-slate-500">{{ cert.id }}</div>
                   </td>
                   <td class="py-3 pr-4">
                     <div class="text-sm font-semibold text-slate-800">{{ cert.recipientName }}</div>

@@ -4,7 +4,7 @@ export interface Template {
   description?: string | null;
   rawTemplate: string;
   placeholders?: Record<string, unknown> | null;
-  isActive: boolean;
+  active: boolean;
   createdAt: string;
   updatedAt: string;
 }

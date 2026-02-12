@@ -7,7 +7,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CertificateService } from '../../core/services/certificate.service';
 import { TemplateService } from '../../core/services/template.service';
 import { NotificationService } from '../../core/services/notification.service';
-import { Certificate } from '../../core/models/certificate.models';
+import { CertificateSummary } from '../../core/models/certificate.models';
 import { Template } from '../../core/models/template.models';
 
 @Component({
@@ -25,7 +25,7 @@ export class TemplatesComponent implements OnInit {
 
   protected readonly templates = signal<Template[]>([]);
   protected readonly isLoading = signal(false);
-  protected readonly certificates = signal<Certificate[]>([]);
+  protected readonly certificates = signal<CertificateSummary[]>([]);
   protected readonly isCertificatesLoading = signal(false);
   protected readonly isGenerating = signal(false);
   protected readonly isModalOpen = signal(false);
@@ -106,10 +106,13 @@ export class TemplatesComponent implements OnInit {
       .generateCertificate(template.id, form.value)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (blob) => {
-          this.downloadBlob(blob, template.name);
+        next: () => {
+          this.notifier.success(
+            'Certificate submitted. Check its generation status in the certificates list.',
+          );
           this.isGenerating.set(false);
           this.closeGenerateModal();
+          this.loadCertificates();
         },
         error: () => {
           this.isGenerating.set(false);

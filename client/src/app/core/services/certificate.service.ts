@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ApiResponse } from '../models/api-response.models';
-import { Certificate } from '../models/certificate.models';
+import { CertificateSummary } from '../models/certificate.models';
 
 @Injectable({ providedIn: 'root' })
 export class CertificateService {
@@ -11,8 +11,8 @@ export class CertificateService {
 
   constructor(private readonly http: HttpClient) {}
 
-  getCertificates(): Observable<ApiResponse<Certificate[]>> {
-    return this.http.get<ApiResponse<Certificate[]>>(this.baseUrl);
+  getCertificates(): Observable<ApiResponse<CertificateSummary[]>> {
+    return this.http.get<ApiResponse<CertificateSummary[]>>(this.baseUrl);
   }
 
   getDownloadUrl(certificateId: string): string {

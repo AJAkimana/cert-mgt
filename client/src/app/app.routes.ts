@@ -6,8 +6,8 @@ import { authGuard } from './core/guards/auth.guard';
 import { guestGuard } from './core/guards/guest.guard';
 import { ProfileComponent } from './features/profile/profile.component';
 import { CustomersComponent } from './features/customers/customers.component';
-import { TemplateCreateComponent } from './features/templates/template-create.component';
-import { TemplatesComponent } from './features/templates/templates.component';
+import { TemplateCreateComponent } from './features/cert-templates/template-create.component';
+import { TemplatesComponent } from './features/cert-templates/templates.component';
 
 export const routes: Routes = [
   { path: 'auth/login', component: LoginComponent, canActivate: [guestGuard] },
@@ -19,6 +19,6 @@ export const routes: Routes = [
   { path: 'templates/new', component: TemplateCreateComponent, canActivate: [authGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
 
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: '**', redirectTo: 'dashboard' },
+  { path: '', redirectTo: 'templates', pathMatch: 'full' },
+  { path: '**', redirectTo: 'templates' },
 ];
