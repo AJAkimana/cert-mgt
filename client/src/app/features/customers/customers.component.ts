@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,8 +35,8 @@ export class CustomersComponent implements OnInit {
   private readonly dialog = inject(MatDialog);
   private readonly destroyRef = inject(DestroyRef);
 
-  protected customers: Customer[] = [];
-  protected isLoading = false;
+  protected readonly customers = signal<Customer[]>([]);
+  protected readonly isLoading = signal(false);
   protected readonly displayedColumns = ['name', 'email', 'status', 'createdAt'];
 
   ngOnInit(): void {
@@ -60,20 +60,21 @@ export class CustomersComponent implements OnInit {
   }
 
   private loadCustomers(): void {
-    this.isLoading = true;
+    this.isLoading.set(true);
     this.customerService
       .getCustomers()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res) => {
-          this.customers = res.data ?? [];
+          this.isLoading.set(false);
+          this.customers.set(res.data ?? []);
         },
         error: () => {
-          this.customers = [];
-          this.isLoading = false;
+          this.customers.set([]);
+          this.isLoading.set(false);
         },
         complete: () => {
-          this.isLoading = false;
+          this.isLoading.set(false);
         },
       });
   }
@@ -85,7 +86,7 @@ export class CustomersComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.notifier.success(res.message || 'Customer created');
-          this.customers = [...this.customers, res.data];
+          this.customers.update((current) => [...current, res.data]);
         },
         error: () => undefined,
       });
