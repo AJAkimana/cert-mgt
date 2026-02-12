@@ -1,6 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { NgIf } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { TopbarComponent } from './shared/components/topbar.component';
@@ -10,7 +9,6 @@ import { TokenService } from './core/services/token.service';
 @Component({
   selector: 'app-root',
   imports: [
-    NgIf,
     MatListModule,
     MatSidenavModule,
     RouterLink,
