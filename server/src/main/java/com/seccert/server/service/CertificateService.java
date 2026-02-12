@@ -1,6 +1,7 @@
 package com.seccert.server.service;
 
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
+import com.seccert.server.dto.certificate.CertificateSummary;
 import com.seccert.server.dto.certificate.GenerateCertificateRequest;
 import com.seccert.server.dto.certificate.GenerateCertificateResponse;
 import com.seccert.server.entity.Certificate;
@@ -23,6 +24,7 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.time.Instant;
 import java.util.Base64;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;

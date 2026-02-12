@@ -24,7 +24,6 @@ public class TemplateService {
 
     @Transactional
     public Template createTemplate(CreateTemplateRequest request, String identifier) {
-        System.out.println("Creating template with name: " + request.getName() + " for identifier: " + identifier);
         if (identifier == null || identifier.isBlank()) {
             throw new AccessDeniedException("Unauthenticated request");
         }
@@ -42,7 +41,6 @@ public class TemplateService {
         template.setRawTemplate(request.getRawTemplate());
         template.setPlaceholders(request.getPlaceholders());
         template.setActive(request.getIsActive() == null || request.getIsActive());
-        System.out.println("Saving template: " + template.getName() + " for customer: " + user.getCustomer().getName());
         return templateRepository.save(template);
     }
 
