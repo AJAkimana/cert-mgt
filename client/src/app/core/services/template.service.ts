@@ -14,4 +14,8 @@ export class TemplateService {
   createTemplate(payload: CreateTemplateRequest): Observable<ApiResponse<Template>> {
     return this.http.post<ApiResponse<Template>>(this.baseUrl, payload);
   }
+
+  getTemplates(): Observable<ApiResponse<Template[]>> {
+    return this.http.get<ApiResponse<Template[]>>(this.baseUrl);
+  }
 }
