@@ -18,6 +18,10 @@ The server runs on `http://localhost:8080` by default.
 
 ## Main endpoints
 
+### Health
+
+- `GET /api/health`
+
 ### Auth
 
 - `POST /api/auth/login`
@@ -38,3 +42,4 @@ The server runs on `http://localhost:8080` by default.
 
 - PDF generation runs in the background.
 - Files are saved under `storage/certificates`.
+- Protected endpoints return JSON for 401/403 errors.

@@ -5,6 +5,7 @@ This is the web app for Sec CERTIFICATE. It lets users:
 - Log in and manage templates
 - Fill placeholders to generate certificates
 - See generated files and download them
+- View backend health status at `/api/health`
 
 ## Tech used
 
