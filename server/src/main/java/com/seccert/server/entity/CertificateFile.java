@@ -26,4 +26,35 @@ public class CertificateFile {
     private Instant createdAt = Instant.now();
 
     // getters/setters
+    public UUID getId() {
+        return id;
+    }
+
+    public Certificate getCertificate() {
+        return certificate;
+    }
+
+    public void setCertificate(Certificate certificate) {
+        this.certificate = certificate;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
+    public String getChecksum() {
+        return checksum;
+    }
+
+    public void setChecksum(String checksum) {
+        this.checksum = checksum;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
 }
