@@ -18,4 +18,17 @@ export class TemplateService {
   getTemplates(): Observable<ApiResponse<Template[]>> {
     return this.http.get<ApiResponse<Template[]>>(this.baseUrl);
   }
+
+  generateCertificate(templateId: string, data: Record<string, unknown>): Observable<Blob> {
+    return this.http.post(
+      `${environment.apiBaseUrl}/api/certificates/generate`,
+      {
+        templateId,
+        data,
+      },
+      {
+        responseType: 'blob',
+      },
+    );
+  }
 }
