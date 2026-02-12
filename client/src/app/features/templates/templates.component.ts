@@ -4,8 +4,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+import { CertificateService } from '../../core/services/certificate.service';
 import { TemplateService } from '../../core/services/template.service';
 import { NotificationService } from '../../core/services/notification.service';
+import { Certificate } from '../../core/models/certificate.models';
 import { Template } from '../../core/models/template.models';
 
 @Component({
@@ -16,12 +18,15 @@ import { Template } from '../../core/models/template.models';
 })
 export class TemplatesComponent implements OnInit {
   private readonly templateService = inject(TemplateService);
+  private readonly certificateService = inject(CertificateService);
   private readonly notifier = inject(NotificationService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly fb = inject(FormBuilder);
 
   protected readonly templates = signal<Template[]>([]);
   protected readonly isLoading = signal(false);
+  protected readonly certificates = signal<Certificate[]>([]);
+  protected readonly isCertificatesLoading = signal(false);
   protected readonly isGenerating = signal(false);
   protected readonly isModalOpen = signal(false);
   protected readonly selectedTemplate = signal<Template | null>(null);
@@ -29,6 +34,7 @@ export class TemplatesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTemplates();
+    this.loadCertificates();
   }
 
   private loadTemplates(): void {
@@ -47,6 +53,29 @@ export class TemplatesComponent implements OnInit {
           this.notifier.error('Failed to load templates');
         },
       });
+  }
+
+  private loadCertificates(): void {
+    this.isCertificatesLoading.set(true);
+    this.certificateService
+      .getCertificates()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res) => {
+          this.certificates.set(res.data ?? []);
+          this.isCertificatesLoading.set(false);
+        },
+        error: () => {
+          this.certificates.set([]);
+          this.isCertificatesLoading.set(false);
+          this.notifier.error('Failed to load certificates');
+        },
+      });
+  }
+
+  downloadCertificate(certificateId: string): void {
+    const url = this.certificateService.getDownloadUrl(certificateId);
+    window.open(url, '_blank');
   }
 
   openGenerateModal(template: Template): void {

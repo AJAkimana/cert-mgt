@@ -80,6 +80,54 @@ public class CertificateService {
         return new GenerateCertificateResponse(certificate.getId(), certificate.getStatus());
     }
 
+    @Transactional(readOnly = true)
+    public List<CertificateSummary> listCertificatesForUser(String identifier) {
+        if (identifier == null || identifier.isBlank()) {
+            throw new AccessDeniedException("Unauthenticated request");
+        }
+
+        User user = userRepository.findByEmailOrUsername(identifier, identifier)
+                .orElseThrow(() -> new AccessDeniedException("User not found"));
+
+        if (user.getCustomer() == null) {
+            throw new AccessDeniedException("User has no customer");
+        }
+
+        return certificateRepository.findAllByCustomerId(user.getCustomer().getId()).stream()
+                .map(cert -> new CertificateSummary(
+                        cert.getId(),
+                        cert.getTemplate().getId(),
+                        cert.getTemplate().getName(),
+                        cert.getRecipientName(),
+                        cert.getRecipientEmail(),
+                        cert.getStatus(),
+                        cert.getIssuedAt(),
+                        cert.getCreatedAt(),
+                        cert.getUpdatedAt(),
+                        certificateFileRepository.findByCertificateId(cert.getId()).isPresent()))
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public CertificateFile getCertificateFile(UUID certificateId, String identifier) {
+        if (identifier == null || identifier.isBlank()) {
+            throw new AccessDeniedException("Unauthenticated request");
+        }
+
+        User user = userRepository.findByEmailOrUsername(identifier, identifier)
+                .orElseThrow(() -> new AccessDeniedException("User not found"));
+
+        Certificate certificate = certificateRepository.findById(certificateId)
+                .orElseThrow(() -> new IllegalArgumentException("Certificate not found"));
+
+        if (user.getCustomer() == null || !user.getCustomer().getId().equals(certificate.getCustomer().getId())) {
+            throw new AccessDeniedException("Not allowed to access this certificate");
+        }
+
+        return certificateFileRepository.findByCertificateId(certificateId)
+                .orElseThrow(() -> new IllegalArgumentException("Certificate file not ready"));
+    }
+
     @Async("certificateTaskExecutor")
     public void generateCertificateAsync(UUID certificateId, Template template, Map<String, Object> data) {
         Optional<Certificate> certOptional = certificateRepository.findById(certificateId);
