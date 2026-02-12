@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CertificateFileRepository extends JpaRepository<CertificateFile, UUID> {
-	Optional<CertificateFile> findByCertificateId(UUID certificateId);
+    Optional<CertificateFile> findByCertificateId(UUID certificateId);
 }

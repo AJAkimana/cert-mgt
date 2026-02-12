@@ -99,8 +99,7 @@
                 <th class="py-3 pr-4">Template</th>
                 <th class="py-3 pr-4">Recipient</th>
                 <th class="py-3 pr-4">Status</th>
-                <th class="py-3 pr-4">Created</th>
-                <th class="py-3 pr-4">Updated</th>
+                <th class="py-3 pr-4">Generated At</th>
                 <th class="py-3 text-right">Action</th>
               </tr>
             </thead>
@@ -111,7 +110,7 @@
                     <div class="text-sm font-semibold text-slate-800">
                       {{ cert.template?.name }}
                     </div>
-                    <div class="text-[11px] text-slate-500">{{ cert.template?.name }}</div>
+                    <div class="text-[11px] text-slate-500">{{ cert.template?.description }}</div>
                   </td>
                   <td class="py-3 pr-4">
                     <div class="text-sm font-semibold text-slate-800">{{ cert.recipientName }}</div>
@@ -129,8 +128,7 @@
                       {{ cert.status }}
                     </span>
                   </td>
-                  <td class="py-3 pr-4">{{ cert.createdAt | date: 'mediumDate' }}</td>
-                  <td class="py-3 pr-4">{{ cert.updatedAt | date: 'mediumDate' }}</td>
+                  <td class="py-3 pr-4">{{ cert.createdAt | date: 'MMMM d, y, hh:mm:ss a' }}</td>
                   <td class="py-3 text-right">
                     @if (cert.status === 'READY') {
                       <button
