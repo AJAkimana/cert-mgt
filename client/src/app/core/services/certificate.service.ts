@@ -15,7 +15,9 @@ export class CertificateService {
     return this.http.get<ApiResponse<CertificateSummary[]>>(this.baseUrl);
   }
 
-  getDownloadUrl(certificateId: string): string {
-    return `${this.baseUrl}/${certificateId}/download`;
+  downloadCertificate(certificateId: string): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/${certificateId}/download`, {
+      responseType: 'blob',
+    });
   }
 }

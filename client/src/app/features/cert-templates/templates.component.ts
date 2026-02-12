@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { interval, Subscription } from 'rxjs';
 
 import { CertificateService } from '../../core/services/certificate.service';
 import { TemplateService } from '../../core/services/template.service';
@@ -22,6 +23,7 @@ export class TemplatesComponent implements OnInit {
   private readonly notifier = inject(NotificationService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly fb = inject(FormBuilder);
+  private pollSubscription: Subscription | null = null;
 
   protected readonly templates = signal<Template[]>([]);
   protected readonly isLoading = signal(false);
@@ -64,18 +66,29 @@ export class TemplatesComponent implements OnInit {
         next: (res) => {
           this.certificates.set(res.data ?? []);
           this.isCertificatesLoading.set(false);
+          this.updatePolling(res.data ?? []);
         },
         error: () => {
           this.certificates.set([]);
           this.isCertificatesLoading.set(false);
           this.notifier.error('Failed to load certificates');
+          this.stopPolling();
         },
       });
   }
 
-  downloadCertificate(certificateId: string): void {
-    const url = this.certificateService.getDownloadUrl(certificateId);
-    window.open(url, '_blank');
+  downloadCertificate(cert: CertificateSummary): void {
+    this.certificateService
+      .downloadCertificate(cert.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (blob) => {
+          this.downloadBlob(blob, cert.templateName || 'certificate');
+        },
+        error: () => {
+          this.notifier.error('Failed to download certificate');
+        },
+      });
   }
 
   openGenerateModal(template: Template): void {
@@ -164,5 +177,33 @@ export class TemplatesComponent implements OnInit {
     anchor.download = `${name || 'certificate'}.pdf`;
     anchor.click();
     URL.revokeObjectURL(url);
+  }
+
+  private updatePolling(items: CertificateSummary[]): void {
+    const hasPending = items.some(
+      (cert) => cert.status === 'PENDING' || cert.status === 'PROCESSING',
+    );
+    if (hasPending) {
+      this.startPolling();
+    } else {
+      this.stopPolling();
+    }
+  }
+
+  private startPolling(): void {
+    if (this.pollSubscription) {
+      return;
+    }
+    this.pollSubscription = interval(5000)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.loadCertificates());
+  }
+
+  private stopPolling(): void {
+    if (!this.pollSubscription) {
+      return;
+    }
+    this.pollSubscription.unsubscribe();
+    this.pollSubscription = null;
   }
 }
